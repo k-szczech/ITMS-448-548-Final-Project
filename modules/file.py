@@ -1,3 +1,7 @@
+# Nicholas Simpkins 2023-11-30
+# Uploads a file to file.io and prints the download link
+
+
 import requests
 
 def upload_file(file_path):
