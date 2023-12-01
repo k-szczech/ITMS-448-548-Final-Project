@@ -5,28 +5,26 @@
 from ipaddress import ip_address
 from requests import get
 
+# Exception
+class HTTPStatusCodeException(Exception):
+    pass
+
 # Main function!!!
 def getResult(input_ip):
     # Validating IP address
-    try:
-        ip_address(input_ip)
-    except ValueError as e:
-        return (False, str(e))
+    ip_address(input_ip)
     
     # Formatting URL
     url = "https://get.geojs.io/v1/ip/geo/" + input_ip + ".json"
     response = None
 
     # Getting response
-    try:
-        response = get(url)
-    except Exception as e:
-        return (False, str(e))
+    response = get(url)
     
     # Checking that response was successful
     if(response.status_code != 200):
-        return (False, "Status Code " + str(response.status_code))
+        raise HTTPStatusCodeException(False, "Status Code " + str(response.status_code))
     
     #Returning result
-    return (True, response.content.decode()) 
+    return response.content.decode()
     
