@@ -25,7 +25,9 @@ def getKeys():
 def addData(dataType, jsonData):
     if(dataType != getDataType()):
         raise TypeError("Data type mismatch")
-    data[1].append(jsonData)
+    #removing problematic characters
+    processedData = jsonData.replace("\n","")
+    data[1].append(processedData)
 
 def dumpCSV(fileName, keyList):
     output = ""
