@@ -1,6 +1,6 @@
 from modules import geoip
 import json
-
+import PySimpleGUI as sg
 
 # Functions relating to data handling
 # First position is data type (string), second position is a list of json strings
