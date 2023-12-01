@@ -26,3 +26,20 @@ def addData(dataType, jsonData):
     if(dataType != getDataType()):
         raise TypeError("Data type mismatch")
     data[1].append(jsonData)
+
+def dumpCSV(fileName, keyList):
+    output = ""
+    output += ",".join(keyList)
+    output += "\n"
+    for row in data[1]:
+        csvRow = []
+        jsonData = json.loads(row)
+        for key in keyList:
+            if key in jsonData:
+                csvRow.append(jsonData[key])
+            else:
+                csvRow.append("")
+        output += ",".join(csvRow) + "\n"
+    with open(fileName, "w") as outFile:
+        outFile.write(output)
+        outFile.close()
