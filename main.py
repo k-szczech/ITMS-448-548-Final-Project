@@ -99,7 +99,7 @@ while True:
             layout = [  [sg.Text(value1)]]
             window = sg.Window('github', layout)
         elif check==True:
-            layout = [  [sg.Text('Github Username'), sg.Text(values[0])],[sg.Text('Github user name'), sg.Text(value1['name'])],[sg.Text('Github User Location'), sg.Text(value1['location'])],[sg.Text('Github User Bio'), sg.Text(value1['bio'])],[sg.Text('Github User Public Repos'), sg.Text(value1['public_repos'])]]
+            layout = [  [sg.Text('Github Username'), sg.Text(values[0])],[sg.Text('Github user`s name'), sg.Text(value1['name'])],[sg.Text('Github User`s Location'), sg.Text(value1['location'])],[sg.Text('Github User`s Bio'), sg.Text(value1['bio'])],[sg.Text('Github User`s Public Repos'), sg.Text(value1['public_repos'])]]
             window = sg.Window('github', layout)
     if event =='Submit Email Address':
         value2 = disposable.getResult(values[0])
