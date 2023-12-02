@@ -1,14 +1,17 @@
 # Krystian Szczech, Na'im Muhammad, & Michael Yelich - Fall 2023
 # Main file for GUI interface and data handling
 
-from modules import geoip
+from modules import geoip as geo
+from modules import emailChecker as disposable
+from modules import emailcheck as spam
+from modules import file as file
 import json
 import PySimpleGUI as sg # GUI library
 
 # Functions relating to data handling
 # First position is data type (string), second position is a list of json strings
 data=["",[]]
-
+page = ""
 def resetDataType(newType):
     data[0]=newType
     data[1]=[]
@@ -63,26 +66,27 @@ while True:
     
     # Spam Identifier
     if event == "Spam Identifier":
-        layout_spam = [[sg.Text("Spam Identifier")], [sg.Text("Enter an email address to check for spam: "), sg.InputText()], 
-                       [sg.Button("Ok"), sg.Button("New Request"), sg.Button("Cancel")]]
+        page="1"
+        layout_spam = [[sg.Text("Spam Identifier")], [sg.Text("Enter an email content to check for spam: "), sg.InputText()], 
+                       [sg.Button("submit email content"), sg.Button("New Request"), sg.Button("Cancel")]]
         window = sg.Window('Spam Identifier', layout_spam)
 
     # Disposable
     if event == "Disposable":
-        layout = [  [sg.Text('Geo IP'), sg.Text('Please Enter IP adresss'), sg.InputText()],
-                    [sg.Button("Ok"), sg.Button("New Request"), sg.Button("Cancel")]]
+        layout = [  [sg.Text('Disposable'), sg.Text('Please Enter Email Address'), sg.InputText()],
+                    [sg.Button("Submit Email Address"), sg.Button("New Request"), sg.Button("Cancel")]]
         window = sg.Window('Disposable', layout)
     
     # File
     if event == "File":
         layout = [  [sg.Text('File'), sg.Text(''), sg.InputText()], # ? File Path maybe
-                    [sg.Button("Ok"), sg.Button("New Request"), sg.Button("Cancel")]]
+                    [sg.Button("Submit File"), sg.Button("New Request"), sg.Button("Cancel")]]
         window = sg.Window('File', layout)
     
     # Disposable
     if event == "GeoIP":
         layout = [  [sg.Text('Geo IP'), sg.Text('Please Enter IP adresss'), sg.InputText()],
-                    [sg.Button("Ok"), sg.Button("New Request"), sg.Button("Cancel")]]
+                    [sg.Button("Submit IP address"), sg.Button("New Request"), sg.Button("Cancel")]]
         window = sg.Window('Geo IP', layout)
     
     
@@ -90,5 +94,17 @@ while True:
         window = makeWindow()
     if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
         break
-    
+    if event =='submit email content':
+        spam.detect_spam_email(values[0])
+    if event =='Submit Email Address':
+        disposable.getResult(values[0])
+    if event =='Submit File':
+        file.upload_file(values[0])
+    if event =='Submit IP address':
+        geo.getResult(values[0])
+        
+        
+
+        
+
 window.close()
