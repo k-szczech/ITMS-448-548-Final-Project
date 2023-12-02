@@ -12,6 +12,7 @@ import PySimpleGUI as sg # GUI library
 # First position is data type (string), second position is a list of json strings
 data=["",[]]
 page = ""
+check2=True
 def resetDataType(newType):
     data[0]=newType
     data[1]=[]
@@ -85,7 +86,7 @@ while True:
     # Disposable
     if event == "GeoIP":
         layout = [  [sg.Text('Geo IP'), sg.Text('Please Enter IP adresss'), sg.InputText()],
-                    [sg.Button("Submit IP address"), sg.Button("New Request"), sg.Button("Cancel")]]
+                    [sg.Button("Submit IP address"), sg.Button("complete"), sg.Button("New Request"), sg.Button("Cancel")]]
         window = sg.Window('Geo IP', layout)
     
     
@@ -99,7 +100,7 @@ while True:
             layout = [  [sg.Text(value1)]]
             window = sg.Window('github', layout)
         elif check==True:
-            layout = [  [sg.Text('Github Username'), sg.Text(values[0])],[sg.Text('Github user`s name'), sg.Text(value1['name'])],[sg.Text('Github User`s Location'), sg.Text(value1['location'])],[sg.Text('Github User`s Bio'), sg.Text(value1['bio'])],[sg.Text('Github User`s Public Repos'), sg.Text(value1['public_repos'])]]
+            layout = [  [sg.Text('Github Username'), sg.Text(values[0])],[sg.Text('Github user`s name'), sg.Text(value1['name'])],[sg.Text('Github User`s Location'), sg.Text(value1['location'])],[sg.Text('Github User`s Bio'), sg.Text(value1['bio'])],[sg.Text('Github User Public Repos'), sg.Text(value1['public_repos'])]]
             window = sg.Window('github', layout)
     if event =='Submit Email Address':
         value2 = disposable.getResult(values[0])
@@ -112,10 +113,13 @@ while True:
         window = sg.Window('File', layout)
     if event =='Submit IP address':
         value4 = geo.getResult(values[0])
-        resetDataType(type(value4))
+        if check2==True:
+            check2=False
+            resetDataType(type(value4))
         addData(type(value4),value4)
+    if event =='complete':
+        check2=True
         dumpCSV("ipOutput",getKeys())
-
         
         
 

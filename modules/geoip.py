@@ -27,4 +27,4 @@ def getResult(input_ip):
     
     #Returning result
     return response.content.decode()
-    
+print(getResult("221.226.230.8"))
