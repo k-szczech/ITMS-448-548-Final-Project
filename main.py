@@ -95,7 +95,9 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
         break
     if event =='submit email content':
-        spam.detect_spam_email(values[0])
+        value1 = spam.detect_spam_email(values[0])
+        layout = [  [sg.Text(value1)]]
+        window = sg.Window('spam', layout)
     if event =='Submit Email Address':
         value2 = disposable.getResult(values[0])
         resetDataType(type(value2))

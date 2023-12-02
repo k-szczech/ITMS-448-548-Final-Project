@@ -10,11 +10,13 @@ def detect_spam_email(email_content):
 
         if response.status_code == 200 and result.get('spam'):
             print("Spam email detected!")
+            return("Spam email detected!")
         else:
             print("Not a spam email.")
+            return("Not a spam email.")
     except Exception as e:
         print(f"An error occurred: {str(e)}")
-
+        return(f"An error occurred: {str(e)}")
 
 if __name__ == "__main__":
 
