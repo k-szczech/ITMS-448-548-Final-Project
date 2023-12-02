@@ -95,10 +95,7 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
         break
     if event =='submit email content':
-        value1 = spam.detect_spam_email(values[0])
-        resetDataType(type(value1))
-        addData(type(value1),value1)
-        dumpCSV("spamOutput",getKeys())
+        spam.detect_spam_email(values[0])
     if event =='Submit Email Address':
         value2 = disposable.getResult(values[0])
         resetDataType(type(value2))
@@ -106,9 +103,8 @@ while True:
         dumpCSV("emailOutput",getKeys())
     if event =='Submit File':
         value3 = file.upload_file(values[0])
-        resetDataType(type(value3))
-        addData(type(value3),value3)
-        dumpCSV("fileOutput",getKeys())
+        layout = [  [sg.Text(value3)]]
+        window = sg.Window('File', layout)
     if event =='Submit IP address':
         value4 = geo.getResult(values[0])
         resetDataType(type(value4))
