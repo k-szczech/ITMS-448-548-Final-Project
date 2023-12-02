@@ -5,12 +5,12 @@ def detect_spam_email(email_content):
         api_endpoint = 'https://disify.com/api/email/'  
 
         response = requests.post(api_endpoint, json={'email_content': email_content})
-
+        print(response)
         result = response.json()
-
-        if response.status_code == 200 and result.get('spam'):
-            print("Spam email detected!")
-            return("Spam email detected!")
+        print(result)
+        if response.status_code == 200:
+            print("Spam email address detected!")
+            return("Spam email address detected!")
         else:
             print("Not a spam email.")
             return("Not a spam email.")

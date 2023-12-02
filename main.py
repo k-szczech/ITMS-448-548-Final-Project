@@ -68,7 +68,7 @@ while True:
     if event == "Spam Identifier":
         page="1"
         layout_spam = [[sg.Text("Spam Identifier")], [sg.Text("Enter an email content to check for spam: "), sg.InputText()], 
-                       [sg.Button("submit email content"), sg.Button("New Request"), sg.Button("Cancel")]]
+                       [sg.Button("submit email address"), sg.Button("New Request"), sg.Button("Cancel")]]
         window = sg.Window('Spam Identifier', layout_spam)
 
     # Disposable
@@ -94,7 +94,7 @@ while True:
         window = makeWindow()
     if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
         break
-    if event =='submit email content':
+    if event =='submit email address':
         value1 = spam.detect_spam_email(values[0])
         layout = [  [sg.Text(value1)]]
         window = sg.Window('spam', layout)
