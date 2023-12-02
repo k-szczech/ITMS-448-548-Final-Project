@@ -3,7 +3,7 @@
 
 from modules import geoip as geo
 from modules import emailChecker as disposable
-from modules import emailcheck as spam
+from modules import github as github
 from modules import file as file
 import json
 import PySimpleGUI as sg # GUI library
@@ -55,7 +55,7 @@ def dumpCSV(fileName, keyList):
 # Functions relating to GUI
     # Element layout
 def makeWindow():
-    layout = [[sg.Button("Spam Identifier"), sg.Button("Disposable"), sg.Button("File"), sg.Button("GeoIP")]]
+    layout = [[sg.Button("Github Data"), sg.Button("Disposable"), sg.Button("File"), sg.Button("GeoIP")]]
     window = sg.Window('IP Address/Domain Name Lookup', layout)
     return window
 
@@ -64,12 +64,11 @@ window = makeWindow()
 while True:
     event, values = window.read()
     
-    # Spam Identifier
-    if event == "Spam Identifier":
-        page="1"
-        layout_spam = [[sg.Text("Spam Identifier")], [sg.Text("Enter an email content to check for spam: "), sg.InputText()], 
-                       [sg.Button("submit email address"), sg.Button("New Request"), sg.Button("Cancel")]]
-        window = sg.Window('Spam Identifier', layout_spam)
+    # Git Identifier
+    if event == "Github Data":
+        layout_git = [[sg.Text("Github Data")], [sg.Text("Enter an Github Username: "), sg.InputText()], 
+                       [sg.Button("submit github username"), sg.Button("New Request"), sg.Button("Cancel")]]
+        window = sg.Window('Github Data', layout_git)
 
     # Disposable
     if event == "Disposable":
@@ -94,10 +93,14 @@ while True:
         window = makeWindow()
     if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
         break
-    if event =='submit email address':
-        value1 = spam.detect_spam_email(values[0])
-        layout = [  [sg.Text(value1)]]
-        window = sg.Window('spam', layout)
+    if event =='submit github username':
+        check, value1 = github.get_github_user_data(values[0])
+        if check==False:
+            layout = [  [sg.Text(value1)]]
+            window = sg.Window('github', layout)
+        elif check==True:
+            layout = [  [sg.Text('Github Username'), sg.Text(values[0])],[sg.Text('Github user name'), sg.Text(value1['name'])],[sg.Text('Github User Location'), sg.Text(value1['location'])],[sg.Text('Github User Bio'), sg.Text(value1['bio'])],[sg.Text('Github User Public Repos'), sg.Text(value1['public_repos'])]]
+            window = sg.Window('github', layout)
     if event =='Submit Email Address':
         value2 = disposable.getResult(values[0])
         resetDataType(type(value2))
