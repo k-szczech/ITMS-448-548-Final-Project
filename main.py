@@ -44,7 +44,7 @@ def dumpCSV(fileName, keyList):
         jsonData = json.loads(row)
         for key in keyList:
             if key in jsonData:
-                csvRow.append(jsonData[key])
+                csvRow.append(str(jsonData[key]))
             else:
                 csvRow.append("")
         output += ",".join(csvRow) + "\n"
@@ -95,13 +95,26 @@ while True:
     if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
         break
     if event =='submit email content':
-        spam.detect_spam_email(values[0])
+        value1 = spam.detect_spam_email(values[0])
+        resetDataType(type(value1))
+        addData(type(value1),value1)
+        dumpCSV("spamOutput",getKeys())
     if event =='Submit Email Address':
-        disposable.getResult(values[0])
+        value2 = disposable.getResult(values[0])
+        resetDataType(type(value2))
+        addData(type(value2),value2)
+        dumpCSV("emailOutput",getKeys())
     if event =='Submit File':
-        file.upload_file(values[0])
+        value3 = file.upload_file(values[0])
+        resetDataType(type(value3))
+        addData(type(value3),value3)
+        dumpCSV("fileOutput",getKeys())
     if event =='Submit IP address':
-        geo.getResult(values[0])
+        value4 = geo.getResult(values[0])
+        resetDataType(type(value4))
+        addData(type(value4),value4)
+        dumpCSV("ipOutput",getKeys())
+
         
         
 
